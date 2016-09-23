@@ -19,6 +19,7 @@
       </profile>
     </annotationProcessing>
   </component>
+  <component name="CopyrightManager" default="" />
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
@@ -32,11 +33,6 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
-  </component>
-  <component name="GradleSettings">
-    <option name="gradleHome" value="G:/_tmobile/gradle-1.0" />
-    <option name="linkedProjectPath" value="C:\workspace\_projekty\portal-master\build.gradle" />
-    <option name="preferLocalInstallationToWrapper" value="true" />
   </component>
   <component name="IntelliCalc">
     <mode value="0" />
@@ -177,7 +173,7 @@
       <module fileurl="file://$PROJECT_DIR$/MavenRunHelper.iml" filepath="$PROJECT_DIR$/MavenRunHelper.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="IDEA IC-129.17" project-jdk-type="IDEA JDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="false" assert-keyword="true" jdk-15="true" project-jdk-name="IntelliJ IDEA IU-162.2032.8" project-jdk-type="IDEA JDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="VcsDirectoryMappings">
@@ -404,4 +400,3 @@
     </option>
   </component>
 </project>
-

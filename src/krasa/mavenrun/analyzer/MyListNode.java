@@ -10,42 +10,46 @@ import org.jetbrains.idea.maven.model.MavenArtifactNode;
  */
 public class MyListNode {
 
-	protected final String key;
-	protected final List<MavenArtifactNode> value;
-	protected String maxVersion;
+    protected final String key;
+    protected final List<MavenArtifactNode> value;
+    protected String maxVersion;
 
-	public MyListNode(Map.Entry<String, List<MavenArtifactNode>> s) {
-		key = s.getKey();
-		value = s.getValue();
-		maxVersion = GuiForm.sortByVersion(value);
-	}
+    public MyListNode(Map.Entry<String, List<MavenArtifactNode>> s) {
+        key = s.getKey();
+        value = s.getValue();
+        maxVersion = GuiForm.sortByVersion(value);
+    }
 
-	public String getMaxVersion() {
-		return maxVersion;
-	}
+    public String getMaxVersion() {
+        return maxVersion;
+    }
 
-	@Override
-	public String toString() {
-		return key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
+    @Override
+    public String toString() {
+        return key;
+    }
 
-		MyListNode that = (MyListNode) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
-		if (key != null ? !key.equals(that.key) : that.key != null)
-			return false;
+        MyListNode that = (MyListNode) o;
 
-		return true;
-	}
+        if (key != null ? !key.equals(that.key) : that.key != null)
+            return false;
 
-	@Override
-	public int hashCode() {
-		return key != null ? key.hashCode() : 0;
-	}
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return key != null ? key.hashCode() : 0;
+    }
 }
