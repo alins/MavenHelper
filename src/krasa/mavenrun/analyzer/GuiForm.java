@@ -17,6 +17,7 @@ import krasa.mavenrun.analyzer.action.LeftTreePopupHandler;
 import krasa.mavenrun.analyzer.action.RightTreePopupHandler;
 import krasa.mavenrun.model.SortableListDataModel;
 import org.apache.commons.lang.StringUtils;
+import org.ibex.nestedvm.util.Sort;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.idea.maven.model.MavenArtifact;
 import org.jetbrains.idea.maven.model.MavenArtifactNode;
@@ -79,7 +80,7 @@ public class GuiForm {
     private JTree leftTree;
     private JCheckBox showGroupId;
     private JPanel buttonsPanel;
-    protected SortableListDataModel listDataModel;
+    protected DefaultListModel listDataModel;
     protected Map<String, List<MavenArtifactNode>> allArtifactsMap;
     protected final DefaultTreeModel rightTreeModel;
     protected final DefaultTreeModel leftTreeModel;
@@ -193,7 +194,7 @@ public class GuiForm {
     }
 
     private void createUIComponents() {
-        listDataModel = new SortableListDataModel();
+        listDataModel = new DefaultListModel();
         leftPanelList = new JBList(listDataModel);
         leftPanelList.addListSelectionListener(new MyListSelectionListener());
         // no generics in IJ12
@@ -311,6 +312,8 @@ public class GuiForm {
         listDataModel.clear();
         leftTreeRoot.removeAllChildren();
 
+        SortableListDataModel sortableListDataModel = new SortableListDataModel();
+
         final String searchFieldText = searchField.getText();
         boolean conflictsWarning = false;
         boolean showNoConflictsLabel = false;
@@ -319,11 +322,11 @@ public class GuiForm {
                 final List<MavenArtifactNode> nodes = s.getValue();
                 if (nodes.size() > 1 && hasConflicts(nodes)) {
                     if (searchFieldText == null || s.getKey().contains(searchFieldText)) {
-                        listDataModel.addElement(new MyListNode(s));
+                        sortableListDataModel.add(new MyListNode(s));
                     }
                 }
             }
-            showNoConflictsLabel = listDataModel.isEmpty();
+            showNoConflictsLabel = sortableListDataModel.isEmpty();
             BuildNumber build = ApplicationInfoEx.getInstanceEx().getBuild();
             int baselineVersion = build.getBaselineVersion();
             if (showNoConflictsLabel && baselineVersion >= 139) {
@@ -344,7 +347,7 @@ public class GuiForm {
         } else if (allDependenciesAsListRadioButton.isSelected()) {
             for (Map.Entry<String, List<MavenArtifactNode>> s : allArtifactsMap.entrySet()) {
                 if (searchFieldText == null || s.getKey().contains(searchFieldText)) {
-                    listDataModel.addElement(new MyListNode(s));
+                    sortableListDataModel.add(new MyListNode(s));
                 }
             }
             showNoConflictsLabel = false;
@@ -358,15 +361,7 @@ public class GuiForm {
             leftPanelLayout.show(leftPanelWrapper, "allAsTree");
         }
 
-        listDataModel.sort(new Comparator() {
-            @Override
-            public int compare(Object o1, Object o2) {
-                String first = ((MyListNode) o1).getKey();
-                String second = ((MyListNode) o2).getKey();
-
-                return first.split(":")[1].compareTo(second.split(":")[1]);
-            }
-        });
+        sortableListDataModel.populateListSorted(listDataModel);
 
         if (conflictsWarning) {
             javax.swing.SwingUtilities.invokeLater(new Runnable() {
